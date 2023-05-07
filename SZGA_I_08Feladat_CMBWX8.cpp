@@ -1,4 +1,4 @@
-﻿// SZGA_I_08Feladat_CMBWX8.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// SZGA_I_08Feladat_CMBWX8.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 /* 08. Feladat
@@ -6,7 +6,6 @@
 majd kiírja a számot római számként a képernyőre. */
 
 #include <iostream>
-#include <string>
 
 using namespace std;
 
@@ -15,15 +14,16 @@ int main()
     int N;
     int countC, countX, countI;
 
-    int _saveesp;
+    int saveesp;
 
     const char* beker = "Kérek egy DECIMÁLIS számot 1-4999 között!\n";      // printf
-    const char* eredmeny = "\n\nA római szám:\n";                           // printf
+
     const char* formati = "%d";     // scanf
     const char* hun = "Hun";        // setlocale
     const char* _pause = "pause";   // system pause
 
     const char* rom[13] = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
+    char testArray[50];
     int count[13] = { 0 };
 
     setlocale(LC_ALL, hun);
@@ -46,6 +46,7 @@ int main()
         push formati;           // formázó karakter
         call dword ptr scanf;   // input bekérése
 
+        // ELLENŐRZÉS
         cmp N, 1;
         jl input;
         cmp N, 4999;
@@ -56,7 +57,6 @@ int main()
     }
 
     /*
-    // ELLENŐRZÉS
     _asm
     {
         push N;
@@ -241,7 +241,7 @@ int main()
     }
 
     /*
-    // ÉRTÉKEK ELLENŐRZÉSE
+    // INDEXELÉS ELLENŐRZÉSE
     printf("\ncountC: %d\n", countC);
     printf("countX: %d\n", countX);
     printf("countI: %d\n\n", countI);
@@ -260,12 +260,33 @@ int main()
     printf("1:\t %d\n", count[12]);
     */
 
+
     _asm
     {
-        push eredmeny;
-        call dword ptr printf;
-    }
+        lea ebx, count;
+        cmp dword ptr[ebx], 0;  //count array 0. elemének összehasonlítása 0-val
+        je jump;                // ha count[0] = 0 akkor ugorjon előre
 
+        
+        mov ecx, dword ptr[eax];
+        mov ebx, 77;            // ebx = 77 (ASCII "M")
+        mul ebx;
+        lea edx, testArray;
+        add edx, ecx;
+        mov byte ptr[edx]
+        add edx, 1;
+        mov byte ptr[edx], 'M'
+        
+
+        jump:
+    }
+    // kapott hiba: C2414 illegal number of operands
+
+
+
+
+
+    // C++ kiíratás
     for (int i = 0; i < 13; i++) {
         if (count[i] > 0) {
             for (int j = 0; j < count[i]; j++) {
@@ -276,7 +297,7 @@ int main()
 
     _asm
     {
-        mov _saveesp, ESP;
+        mov saveesp, esp;
     }
 
     return 0;
