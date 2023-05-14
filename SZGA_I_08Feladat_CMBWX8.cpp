@@ -261,43 +261,28 @@ int main()
     */
 
 
-    _asm
-    {
-        lea ebx, count;
-        cmp dword ptr[ebx], 0;  //count array 0. elemének összehasonlítása 0-val
-        je jump;                // ha count[0] = 0 akkor ugorjon előre
-
-        
-        mov ecx, dword ptr[eax];
-        mov ebx, 77;            // ebx = 77 (ASCII "M")
-        mul ebx;
-        lea edx, testArray;
-        add edx, ecx;
-        mov byte ptr[edx]
-        add edx, 1;
-        mov byte ptr[edx], 'M'
-        
-
-        jump:
+    _asm {
+        mov ecx, 0;                                         //loop számláló
+        loop_start :
+        cmp count[ecx * 4], 0;                              //count[0] = 0 ?
+            jle loop_end;                                   //ha count[0] = 0 (az 1000-ek száma), kilép
+            mov testArray[i], 'M';                          // egyébként testArray[i] = 0
+            inc i;                                          // i++
+            dec count[ecx * 4];                             // count[0] - 1
+            jmp loop_start;                                 // loop elejére
+            loop_end :                                      // loop vége
     }
-    // kapott hiba: C2414 illegal number of operands
-
-
-
 
 
     // C++ kiíratás
-    for (int i = 0; i < 13; i++) {
-        if (count[i] > 0) {
-            for (int j = 0; j < count[i]; j++) {
-                cout << rom[i];
-            }
-        }
-    }
+    cout << testArray[0];
+    cout << testArray[1];
+    cout << testArray[2];
+    cout << testArray[3];
 
     _asm
     {
-        mov saveesp, esp;
+        mov esp, saveesp;
     }
 
     return 0;
