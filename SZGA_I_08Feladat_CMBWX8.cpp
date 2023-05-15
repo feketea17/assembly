@@ -261,24 +261,35 @@ int main()
     */
 
 
-    _asm {
-        mov ecx, 0;                                         //loop számláló
-        loop_start :
-        cmp count[ecx * 4], 0;                              //count[0] = 0 ?
-            jle loop_end;                                   //ha count[0] = 0 (az 1000-ek száma), kilép
-            mov testArray[i], 'M';                          // egyébként testArray[i] = 0
-            inc i;                                          // i++
-            dec count[ecx * 4];                             // count[0] - 1
-            jmp loop_start;                                 // loop elejére
-            loop_end :                                      // loop vége
-    }
+    //_asm {
+    //    mov ecx, 0;                                         //loop számláló
+    //    loop_start :
+    //    cmp count[ecx * 4], 0;                              //count[0] = 0 ?
+    //        jle loop_end;                                   //ha count[0] = 0 (az 1000-ek száma), kilép
+    //        mov testArray[i], 'M';                          // egyébként testArray[i] = 0
+    //        inc i;                                          // i++
+    //        dec count[ecx * 4];                             // count[0] - 1
+    //        jmp loop_start;                                 // loop elejére
+    //        loop_end :                                      // loop vége
+    //}
 
 
-    // C++ kiíratás
-    cout << testArray[0];
-    cout << testArray[1];
-    cout << testArray[2];
-    cout << testArray[3];
+    //// C++ kiíratás
+    //cout << testArray[0];
+    //cout << testArray[1];
+    //cout << testArray[2];
+    //cout << testArray[3];
+
+
+    //// C++ kiíratás
+    //for (int i = 0; i < 13; i++) {
+    //    if (count[i] > 0) {
+    //        for (int j = 0; j < count[i]; j++) {
+    //            cout << rom[i];
+    //        }
+    //    }
+    //}
+
 
     _asm
     {
