@@ -28,6 +28,10 @@ int main()
 
     setlocale(LC_ALL, hun);
 
+    _asm
+    {
+        mov saveesp, esp; //EZ A SOR NEM VOLT BENNE
+    }
 
     // BEÁLLÍTÁSOK
     _asm
@@ -110,22 +114,22 @@ int main()
         je CD;      // countC == 4
         jg DC;      // countC > 4
 
-    // (100-300)
+        // (100-300)
     C:
         lea ebx, count;
         mov eax, countC;
         mov[ebx + 16], eax;         // (C) = countC
-        mov dword ptr[countC], 0;   // countC = 0
+        mov countC, 0;   // countC = 0
         jmp tizesek;                // kilép, (10) számolásra ugrás
 
-    // (400)
+        // (400)
     CD:
         lea ebx, count;
         mov dword ptr[ebx + 12], 1; // (CD) +1
-        mov dword ptr[countC], 0;
+        mov countC, 0;
         jmp tizesek;
 
-    // (500-900)
+        // (500-900)
     DC:
         cmp countC, 9;
         je CM;
@@ -134,14 +138,14 @@ int main()
         sub countC, 5;
         mov eax, countC;
         mov[ebx + 16], eax;         // (C) = countC
-        mov dword ptr[countC], 0;
+        mov countC, 0;
         jmp tizesek;
 
-    // (900)
+        // (900)
     CM:
         lea ebx, count;
         mov dword ptr[ebx + 4], 1;  // (CM) +1
-        mov dword ptr[countC], 0;
+        mov countC, 0;
         jmp tizesek;
     }
 
@@ -155,22 +159,22 @@ int main()
         je XL;      // countX == 4
         jg LX;      // countX > 4
 
-    // (10-30)
+        // (10-30)
     X:
         lea ebx, count;
         mov eax, countX;
         mov[ebx + 32], eax;         // (X) = countX
-        mov dword ptr[countX], 0;   // countX = 0
+        mov countX, 0;   // countX = 0
         jmp egyesek;                // kilép, (10) számolásra ugrás
 
-    // (40)
+        // (40)
     XL:
         lea ebx, count;
         mov dword ptr[ebx + 28], 1; // (XL) +1
-        mov dword ptr[countX], 0;
+        mov countX, 0;
         jmp egyesek;
 
-    // (50-90)
+        // (50-90)
     LX:
         cmp countX, 9;
         je XC;
@@ -179,14 +183,14 @@ int main()
         sub countX, 5;
         mov eax, countX;
         mov[ebx + 32], eax;         // (X) = countX
-        mov dword ptr[countX], 0;
+        mov countX, 0;
         jmp egyesek;
 
-    // (90)
+        // (90)
     XC:
         lea ebx, count;
         mov dword ptr[ebx + 20], 1;  // (XC) +1
-        mov dword ptr[countX], 0;
+        mov countX, 0;
         jmp egyesek;
     }
 
@@ -200,22 +204,22 @@ int main()
         je IV;      // countI == 4
         jg VI;      // countI > 4
 
-    // (1-3)
+        // (1-3)
     I:
         lea ebx, count;
         mov eax, countI;
         mov[ebx + 48], eax;         // (I) = countI
-        mov dword ptr[countI], 0;   // countX = 0
-        jmp kész;                   // kilép
+        mov countI, 0;   // countX = 0
+        jmp kesz;                   // kilép
 
-    // (4)
+        // (4)
     IV:
         lea ebx, count;
         mov dword ptr[ebx + 44], 1; // (IV) +1
-        mov dword ptr[countI], 0;
-        jmp kész;
+        mov countI, 0;
+        jmp kesz;
 
-    // (5-9)
+        // (5-9)
     VI:
         cmp countI, 9;
         je IX;
@@ -224,20 +228,20 @@ int main()
         sub countI, 5;
         mov eax, countI;
         mov[ebx + 48], eax;          // (I) = countI
-        mov dword ptr[countI], 0;
-        jmp kész;
+        mov countI, 0;
+        jmp kesz;
 
-    // (9)
-    IX :
+        // (9)
+    IX:
         lea ebx, count;
         mov dword ptr[ebx + 36], 1;  // (IX) +1
-        mov dword ptr[countI], 0;
-        jmp kész;
+        mov countI, 0;
+        jmp kesz;
     }
 
     _asm
     {
-    kész:
+    kesz:
     }
 
     /*
